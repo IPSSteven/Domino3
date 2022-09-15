@@ -1,0 +1,121 @@
+//public void runNotes() throws NotesException {
+		//super.runNotes();
+		
+		//boolean idFileAttached, mailChanges;
+		//ViewEntryCollection vc;
+		//Document tmpDoc;
+		//String searchKey, mailDomain, mailSystem, idFileInVault;
+		//double hasAttachment;
+		
+		//setupSession();
+		
+		//try {
+			//getDatabases();
+			
+			//this.log = new InputOutputLogger(this.s, this.dbLog, "Sync Gateway", LogLevel.INFO);
+			//logger.setAgent("ID Vault Uploads for Mail Gateway Users");
+			
+			//vwNABLookup = dbNab.getView(AllConstants.NABVIEWFORSYNCGATEWAY);
+			//vwUARSearch = cfgUAR.getVwITIMEXPORT("IBM");
+			
+			//TODO Switch to logDB
+			//logger.logActionLevel(LogLevel.INFO, "NAB Entry Collection Count : ");
+			//TestLog.printLog("NAB Entry Collection Count : " + this.vwNABLookup.getEntryCount());
+			
+			//05. Loop through vwNABLookup, Search vwUARSearch for Match and process
+			//docNAB = vwNABLookup.getFirstDocument();
+			
+			//while (docNAB != null) {
+				//idFileAttached = false;
+				//mailChanges = false;
+				//searchKey = (String) this.docNAB.getItemValue("ShortName").lastElement();
+				//vc = vwUARSearch.getAllEntriesByKey(searchKey, true);
+				
+				//if (vc.getCount() == 1 ) {
+					//this.uarViewColumns = vc.getFirstEntry().getColumnValues();
+					//mailDomain = (String) this.uarViewColumns.get(3); 
+					//hasAttachment = (Double) this.uarViewColumns.get(10);
+					//mailSystem = (String) this.uarViewColumns.get(14);
+					//idFileInVault = (String) this.uarViewColumns.get(16);
+					
+					// Checks to see if ID File Exists &/or we need to make changes for MailDomain/MailSystem.
+					//if (hasAttachment > 0 && checkIDFileExists(vc.getFirstEntry().getDocument())) {idFileAttached = true;}
+					//if (mailSystem == "Notes" || (mailDomain.startsWith("IDP") || mailDomain.startsWith("OCEAN"))) {mailChanges = true;}
+					
+					//TODO Switch to logDB
+					//TestLog.printLog("##################################");
+					//TestLog.printLog("Match Found for ShortName    : " + searchKey);
+					//TestLog.printLog("   - Mail Domain Before      : " + mailDomain);
+					//TestLog.printLog("   - Mail System Before      : " + mailSystem);
+					//TestLog.printLog("   - Has Attachment Before   : " + hasAttachment);
+					//TestLog.printLog("   - ID File In Vault Before : " + idFileInVault);
+					//TestLog.printLog("   - ID File & PWD Attached  : " + idFileAttached);
+					//TestLog.printLog("   - Mail Changes            : " + mailChanges);
+					
+					//if (idFileAttached || mailChanges) {
+						//this.docUAR = vc.getFirstEntry().getDocument();
+						//this.docUAR.replaceItemValue("MailSystem", "3"); // 3 = Other
+						//this.docUAR.replaceItemValue("Domain", "IBM");
+						// If idFileInVault is not in doc, create it then set value.
+						//if(!this.docUAR.hasItem("idFileInVault")) {
+							//this.docUAR.appendItemValue("idFileInVault");
+						//}
+						//if (idFileAttached && (idFileInVault.equalsIgnoreCase("1") || idFileInVault.equalsIgnoreCase(""))) {
+							//this.docUAR.replaceItemValue("idFileInVault", "0");
+						//}
+						//if (!idFileAttached && (idFileInVault.equalsIgnoreCase("0") || idFileInVault.equalsIgnoreCase(""))) {
+							//this.docUAR.replaceItemValue("idFileInVault", "1");
+						//}
+						
+						//TODO Switch to logDB
+						//TestLog.printLog("##################################");
+						//TestLog.printLog("   - Mail Domain After       : " + this.docUAR.getItemValueString("Domain"));
+						//TestLog.printLog("   - Mail System After       : " + this.docUAR.getItemValueString("MailSystem"));
+						//TestLog.printLog("   - ID File In Vault After  : " + (String) this.docUAR.getItemValue("idFileInVault").firstElement());
+					
+						//if (AllConstants.SYNCGATEWAYTEST) {
+							// We want to save this document
+							//if (!this.docUAR.isEncrypted()) {
+								// Doc is not encrypted.
+								//this.docUAR.setEncryptionKeys(encryptionKey);
+								//this.docUAR.encrypt();
+								//this.docUAR.save() ;
+								////TODO Switch to logDB
+								//TestLog.printLog("   - UAR Doc Encrypted & Saved");
+							//} else {
+								// Doc is encrypted
+								//this.docUAR.save();
+								//TODO Switch to logDB
+								//TestLog.printLog("   - UAR Doc Saved");
+							//}
+						//} else {
+							// We don't want to save this document (Test/Dev)
+							//TODO Switch to logDB
+							//TestLog.printLog("   - UAR Doc Not Saved - TESTING");
+						//}
+						//this.docUAR.recycle();
+					//}
+				//} else if (vc.getCount() > 1) {
+					//System.out.println("Duplicate ShortName : " + searchKey);
+				//}
+				//tmpDoc = this.vwNABLookup.getNextDocument(docNAB);
+				//vc.recycle();
+				//this.docNAB.recycle();
+				//this.docNAB = tmpDoc;
+				//tmpDoc.recycle();
+			//} //While
+		//} catch (Exception e) { 
+			//e.printStackTrace();
+		//} //Try/Catch
+		// TODO Any of these need to be here
+		//this.log.closeLog(null);
+		//this.cfgUAR.recycle();
+		//this.cfgNABDB.recycle();
+		//this.dbLog.recycle();
+		//this.dbNab.recycle();
+		//this.dbUAR.recycle();
+		//this.vwNABLookup.recycle();
+		//this.vwUARSearch.recycle();
+		//this.docNAB.recycle();
+		//this.s.recycle();
+	//} //runNotes

@@ -1,0 +1,107 @@
+/*			
+			String nabShortName, uarDomain, uarMailSystem, uarIDFileName = "", uarIDFileInVault;
+			Vector eoVector;
+			Enumeration vectorList;
+			while (veLookup != null) {
+				docLookup = veLookup.getDocument();
+				nabShortName = (String) docLookup.getItemValue("ShortName").lastElement();
+				docUARMatch = vwSearch.getDocumentByKey(nabShortName, true);
+				if (docUARMatch != null) {
+					TestLog.printLog("NAB Doc : " + nabShortName);
+					TestLog.printLog("UAR Doc : Match Found");
+					if (docUARMatch.isEncrypted()) {
+						TestLog.printLog("   - Document is Encrypted");
+						Vector v = docUARMatch.getEncryptionKeys();
+				        for (int i=0; i<v.size(); i++) {
+				        	String k = (String)v.elementAt(i);
+				            TestLog.printLog("   - Encryption Key : " + k);
+				          }
+				        // If Encrypted are we skipping due to testing?
+				        if (Constants.TEST_ENCRYPTED) {
+				        	encryptionSkip = true;
+				        }
+					} else {
+						TestLog.printLog("   - Document is Not Encrypted");
+					}
+					uarDomain = docUARMatch.getItemValueString("Domain");
+					uarMailSystem = docUARMatch.getItemValueString("MailSystem");
+					TestLog.printLog("   - Mail Domain Before : " + uarDomain);
+					TestLog.printLog("   - Mail System Before : " + uarMailSystem);
+					if (uarMailSystem.equalsIgnoreCase("1")) {
+						// Mail System is 'Notes' (1) - Change it to 'Other' (3)
+						docUARMatch.replaceItemValue("MailSystem", "3");
+					}
+					if (uarDomain.startsWith("IDP") || uarDomain.startsWith("OCEAN")){
+						// Mail Domain is 'IDPxx' - Change it to 'IBM'
+						docUARMatch.replaceItemValue("Domain", "IBM");
+					}
+					uarDomain = docUARMatch.getItemValueString("Domain");
+					uarMailSystem = docUARMatch.getItemValueString("MailSystem");
+					TestLog.printLog("   - Mail Domain After : " + uarDomain);
+					TestLog.printLog("   - Mail System After : " + uarMailSystem);
+					// If idFileInVault is not in doc, create it then set value.
+					if(!docUARMatch.hasItem("idFileInVault")) {
+						docUARMatch.appendItemValue("idFileInVault");
+					} 
+					uarIDFileInVault = (String) docUARMatch.getItemValue("idFileInVault").firstElement();
+					// ID file field is not present & ID File in Vault is 0 or Blank.  Set to 1 so don't upload.
+					if ((!docUARMatch.hasItem("IdFile")) & (uarIDFileInVault.equalsIgnoreCase("0") || uarIDFileInVault.equalsIgnoreCase(""))) {
+						docUARMatch.replaceItemValue("idFileInVault", "1");
+					}
+					// Check to see if IdFile is in the UAR Doc
+					if (docUARMatch.hasItem("IdFile")) {
+						RichTextItem idFile = (RichTextItem) docUARMatch.getFirstItem("IdFile");
+						eoVector = idFile.getEmbeddedObjects();
+						vectorList = eoVector.elements();
+						while (vectorList.hasMoreElements()) {
+							EmbeddedObject eo = (EmbeddedObject) vectorList.nextElement();
+							switch (eo.getType()) {
+							case EmbeddedObject.EMBED_ATTACHMENT:
+								uarIDFileName = eo.getName();
+								break;
+							}
+						}
+					}
+					// If the file name does not end with .ID then no ID File Found
+					TestLog.printLog("   - ID File In Vault Flag Before - " + uarIDFileInVault);
+					if (uarIDFileName.endsWith(".ID")) {
+						TestLog.printLog("   - ID File Found - " + uarIDFileName);
+						// Means we have the ID file, if upload flag is 1 or blank so we want to upload it, set to 0.
+						if (uarIDFileInVault.equalsIgnoreCase("1") || uarIDFileInVault.equalsIgnoreCase("")) {
+							docUARMatch.replaceItemValue("idFileInVault", "0");
+						}
+			
+					} else {
+						TestLog.printLog("   - ID File Not Found.");
+						// No .ID File found in the attachments and ID File in Vault is 0 or Blank.  Set to 1 so don't upload.
+						if (uarIDFileInVault.equalsIgnoreCase("0") || uarIDFileInVault.equalsIgnoreCase("")) {
+							docUARMatch.replaceItemValue("idFileInVault", "1");
+						}
+					}
+					TestLog.printLog("   - ID File In Vault Flag After - " + docUARMatch.getItemValue("idFileInVault").firstElement());
+					// If encryptionSkip then we assume password exists.
+					if (encryptionSkip) {
+						TestLog.printLog("   - Password present is assumed due to skip.");
+					} else {
+						// Not skipping Encrypted field so check if Password is present.
+						uarPassword = "";
+						uarPassword = docUARMatch.getItemValueString("Password");
+						if (uarPassword.length() > 0 ) {
+							TestLog.printLog("   - Password is present");
+						} else {
+							TestLog.printLog("   - Password is not present");
+							// TODO What do we do if password field is empty?
+						}
+					}
+					
+				}
+				veLookup2 = vecLookup.getNextEntry(veLookup);
+				veLookup.recycle();
+				veLookup = veLookup2;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+*/

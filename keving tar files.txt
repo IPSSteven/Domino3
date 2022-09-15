@@ -1,0 +1,4 @@
+from Kevin Mooneyham (IBM) to everyone:    10:01 AM
+gunzip -c workspace.tar.gz | tar -xvf -
+from Kevin Mooneyham (IBM) to everyone:    10:01 AM
+gunzip -c workspace.tar.gz | tar -tvf -
